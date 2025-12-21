@@ -1,0 +1,264 @@
+{
+  "users": [
+    {
+      "name": "admin",
+      "password": "admin",
+      "tags": "administrator"
+    },
+    {
+      "name": "ci-test",
+      "password": "ci-test",
+      "tags": "management"
+    },
+    
+    {
+      "name": "my-user1",
+      "password": "my-user1",
+      "tags": "management"
+    },
+    
+    {
+      "name": "my-user2",
+      "password": "my-user2",
+      "tags": "management"
+    }
+    
+  ],
+  "vhosts": [
+    {"name": "/"},
+    {"name": "/test"}
+  ],
+  "permissions": [
+    
+    {
+      "user": "admin",
+      "vhost": "/",
+      "configure": ".*",
+      "write": ".*",
+      "read": ".*"
+    },
+    
+    {
+      "user": "admin",
+      "vhost": "/test",
+      "configure": ".*",
+      "write": ".*",
+      "read": ".*"
+    },
+    
+    {
+      "user": "ci-test",
+      "vhost": "/test",
+      "configure": ".*",
+      "write": ".*",
+      "read": ".*"
+    },
+    
+      
+        {
+          "user": "my-user1",
+          "vhost": "/",
+          "configure": "^my-user1\\..*$",
+          "write": "^(publish|my-user1\\..*)$",
+          "read": "^(consume|my-user1\\..*)$"
+        },
+      
+        {
+          "user": "my-user1",
+          "vhost": "/test",
+          "configure": "^my-user1\\..*$",
+          "write": "^(publish|my-user1\\..*)$",
+          "read": "^(consume|my-user1\\..*)$"
+        }
+      
+    ,
+    
+      
+        {
+          "user": "my-user2",
+          "vhost": "/",
+          "configure": "^my-user2\\..*$",
+          "write": "^(publish|my-user2\\..*)$",
+          "read": "^(consume|my-user2\\..*)$"
+        },
+      
+        {
+          "user": "my-user2",
+          "vhost": "/test",
+          "configure": "^my-user2\\..*$",
+          "write": "^(publish|my-user2\\..*)$",
+          "read": "^(consume|my-user2\\..*)$"
+        }
+      
+    
+    
+  ],
+  "queues": [
+    
+    {
+      "arguments": {
+        "x-message-ttl": 86400000
+      },
+      "auto_delete": false,
+      "durable": true,
+      "name": "all",
+      "type": "classic",
+      "vhost": "/"
+    },
+    
+    {
+      "arguments": {
+        "x-message-ttl": 86400000
+      },
+      "auto_delete": false,
+      "durable": true,
+      "name": "all",
+      "type": "classic",
+      "vhost": "/test"
+    }
+    
+  ],
+  "exchanges": [
+    
+    {
+      "arguments": {},
+      "auto_delete": false,
+      "durable": true,
+      "name": "publish",
+      "type": "topic",
+      "vhost": "/"
+    },
+    {
+      "arguments": {},
+      "auto_delete": false,
+      "durable": true,
+      "name": "consume",
+      "type": "topic",
+      "vhost": "/"
+    },
+    
+    {
+      "arguments": {},
+      "auto_delete": false,
+      "durable": true,
+      "name": "publish",
+      "type": "topic",
+      "vhost": "/test"
+    },
+    {
+      "arguments": {},
+      "auto_delete": false,
+      "durable": true,
+      "name": "consume",
+      "type": "topic",
+      "vhost": "/test"
+    }
+    
+  ],
+  "bindings": [
+    
+    {
+      "arguments": {},
+      "destination": "consume",
+      "destination_type": "exchange",
+      "routing_key": "#",
+      "source": "publish",
+      "vhost": "/"
+    },
+    {
+      "source": "consume",
+      "vhost": "/",
+      "destination": "all",
+      "destination_type": "queue",
+      "routing_key": "#",
+      "arguments": {}
+    },
+    
+    {
+      "arguments": {},
+      "destination": "consume",
+      "destination_type": "exchange",
+      "routing_key": "#",
+      "source": "publish",
+      "vhost": "/test"
+    },
+    {
+      "source": "consume",
+      "vhost": "/test",
+      "destination": "all",
+      "destination_type": "queue",
+      "routing_key": "#",
+      "arguments": {}
+    }
+    
+  ],
+  "topic_permissions": [
+    
+      
+        {
+          "user": "my-user1",
+          "vhost": "/",
+          "exchange": "consume",
+          "write": "^$",
+          "read": ".*"
+        },
+        {
+          "user": "my-user1",
+          "vhost": "/",
+          "exchange": "publish",
+          "write": "^my-user1\\.",
+          "read": ".*"
+        },
+      
+        {
+          "user": "my-user1",
+          "vhost": "/test",
+          "exchange": "consume",
+          "write": "^$",
+          "read": ".*"
+        },
+        {
+          "user": "my-user1",
+          "vhost": "/test",
+          "exchange": "publish",
+          "write": "^my-user1\\.",
+          "read": ".*"
+        }
+      
+    ,
+    
+      
+        {
+          "user": "my-user2",
+          "vhost": "/",
+          "exchange": "consume",
+          "write": "^$",
+          "read": ".*"
+        },
+        {
+          "user": "my-user2",
+          "vhost": "/",
+          "exchange": "publish",
+          "write": "^my-user2\\.",
+          "read": ".*"
+        },
+      
+        {
+          "user": "my-user2",
+          "vhost": "/test",
+          "exchange": "consume",
+          "write": "^$",
+          "read": ".*"
+        },
+        {
+          "user": "my-user2",
+          "vhost": "/test",
+          "exchange": "publish",
+          "write": "^my-user2\\.",
+          "read": ".*"
+        }
+      
+    
+    
+  ]
+}

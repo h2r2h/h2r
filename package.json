@@ -1,0 +1,40 @@
+{
+  "name": "h2r",
+  "version": "1.0.0",
+  "description": "High-performance HTTP to RabbitMQ connector",
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsx watch src/index.ts",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:unit": "vitest run tests/unit",
+    "test:e2e": "vitest run tests/e2e",
+    "test:cov": "vitest run --coverage",
+    "test:ci": "vitest run --coverage --reporter=junit",
+    "lint": "eslint src tests --ext .ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "amqplib": "^0.10.4",
+    "env-schema": "^6.0.0",
+    "fastify": "^5.1.0",
+    "pino": "^9.0.0",
+    "prom-client": "^15.1.0"
+  },
+  "devDependencies": {
+    "@testcontainers/rabbitmq": "^11.10.0",
+    "@types/amqplib": "^0.10.5",
+    "@types/node": "^22.10.2",
+    "@vitest/coverage-v8": "^2.1.8",
+    "pino-pretty": "^13.0.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}
